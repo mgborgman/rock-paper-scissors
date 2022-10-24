@@ -1,3 +1,5 @@
+let gameInfo = {};
+
 // randomly returns either 'rock', 'paper' or 'scissors'
 // this function will be used in the game to make the computers play
 function getComputerChoice() {
@@ -20,38 +22,32 @@ function playRound(playerSelection, computerSelection, playerScore, computerScor
     let computerSelectionLower = computerSelection.toLowerCase();
     if (playerSelectionLower == computerSelectionLower) {
         let roundAnouncement = "Tie Game"
-        let gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
-        return gameInfo; 
+        gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
     } else if (playerSelectionLower == 'rock' && computerSelectionLower == 'scissors') {
         playerScore += 1;
         let roundAnouncement = "You Win! Rock beats Scissors!";
-        let gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
-        return gameInfo;
+        gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
     } else if (playerSelectionLower == 'rock' && computerSelectionLower == 'paper') {
         computerScore += 1;
         let roundAnouncement = "You Lose! Paper beats Rock!"
-        let gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
-        return gameInfo;
+        gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
     } else if (playerSelectionLower == 'paper' && computerSelectionLower == 'rock') {
         playerScore += 1;
         let roundAnouncement = "You Win! Paper beats Rock!";
-        let gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
-        return gameInfo;
+        gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
     } else if (playerSelectionLower == 'paper' && computerSelectionLower == 'scissors') {
         computerScore += 1;
         let roundAnouncement = "You Lose! Scissors beats Paper!"
-        let gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
-        return gameInfo;
+        gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
     } else if (playerSelectionLower == 'scissors' && computerSelectionLower == 'paper') {
         playerScore += 1;
         let roundAnouncement = "You Win! Scissors beats Paper!";
-        let gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
-        return gameInfo;
+        gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
     } else if (playerSelectionLower == 'scissors' && computerSelectionLower == 'rock') {
         computerScore += 1;
         let roundAnouncement = "You Lose! Rock beats Scissors!";
-        let gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
-        return gameInfo;
+        gameInfo = {'playerScore': playerScore, 'computerScore': computerScore, 'roundAnouncement': roundAnouncement};
+        
     }
 }
 
@@ -77,23 +73,48 @@ function getPlayerChoice() {
     return playerSelection;
 }
 
+function initiateRound() {
+    let playerSelection = this.value;
+    let computerSelection = getComputerChoice();
+    let playerScore = 0;
+    let computerScore = 0;
+    console.log(`${playerSelection} was clicked`)
+    // console.log(typeof(gameInfo));
+    // console.log(gameInfo);
+    playRound(playerSelection, computerSelection, playerScore, computerScore);
+}
+
 
 
 // function to run several rounds of Rock Paper Scissors and then declare a winner
 function game() {
+    console.log('are we getting here');
     let round = 1;
     let playerScore = 0;
     let computerScore = 0;
-    for(round; round <= 5; round++) {
-        let playerSelection = getPlayerChoice();
-        const computerSelection = getComputerChoice();
-        let gameInfo = playRound(playerSelection, computerSelection, playerScore, computerScore);
-        playerScore = gameInfo['playerScore'];
-        computerScore = gameInfo['computerScore'];
+    let buttons = document.querySelectorAll('.button');
+    // console.log(buttons);
+    // for(round; round <= 5; round++) {
+        // let playerSelection = getPlayerChoice();
+        // const computerSelection = getComputerChoice();
+        for(const button of buttons) {
+            // console.log(button);
+            let playerSelection = this.value;
+            let computerSelection = getComputerChoice();
+            button.addEventListener('click', playRound(playerSelection, computerSelection, playerScore, computerScore));
+            // console.log(gameInfo);
+        }
+        // console.log(gameInfo);
+        // let gameInfo = playRound(playerSelection, computerSelection, playerScore, computerScore);
+        // playerScore = gameInfo['playerScore'];
+        // computerScore = gameInfo['computerScore'];
         let roundAnouncement = gameInfo['roundAnouncement'];
         console.log(roundAnouncement);
-        console.log(`Score is you:${playerScore} to computer:${computerScore}`);
-    }
+        let resultDiv = document.getElementById('results');
+        resultDiv.innerHTML = `${roundAnouncement}`;
+        // console.log(`Score is you:${playerScore} to computer:${computerScore}`);
+    // }
 }
 
 game();
+// initiateRound();
