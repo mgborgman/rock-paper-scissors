@@ -1,3 +1,4 @@
+// global game state variable
 let gameInfo = {};
 
 // randomly returns either 'rock', 'paper' or 'scissors'
