@@ -1,5 +1,7 @@
 // global game state variable
 let gameInfo = {};
+let playerScore = 0;
+let computerScore = 0;
 
 // randomly returns either 'rock', 'paper' or 'scissors'
 // this function will be used in the game to make the computers play
@@ -18,7 +20,7 @@ function getRandomInt(max) {
 // funciton that plays a single round of Rock Paper Scissors
 // function takes two parameters playerSelection and computerSelection
 // and then returns a string that declares the winner of the round
-function playRound(playerSelection, computerSelection, playerScore, computerScore) {
+function playRound(playerSelection, computerSelection, playerScore = 0, computerScore = 0) {
     let playerSelectionLower = playerSelection.toLowerCase();
     let computerSelectionLower = computerSelection.toLowerCase();
     if (playerSelectionLower == computerSelectionLower) {
@@ -52,37 +54,41 @@ function playRound(playerSelection, computerSelection, playerScore, computerScor
     }
 }
 
-function getPlayerChoice() {
-    // Prompt user for their choice, must be rock paper or scissors
-    let playerSelection = prompt("Choose: Rock, Paper, or Scissors");
+// Player Choice is now taken off button click
 
-    // create a while loop to check that user input is either 'rock', 'paper' or 'scissors'
-    // if not ask for input again
-    // if input is valid continue on with program
-    keepGoing = true;
+// function getPlayerChoice() {
+//     // Prompt user for their choice, must be rock paper or scissors
+//     let playerSelection = prompt("Choose: Rock, Paper, or Scissors");
 
-    while (keepGoing) {
-        if (playerSelection.toLowerCase() == 'rock' || playerSelection.toLowerCase() == 'paper' ||
-            playerSelection.toLowerCase() == 'scissors') {
-                keepGoing = false;
-            } else {
-                playerSelection = prompt("Must choose either 'rock', 'paper' or 'scissors'");
-            }
+//     // create a while loop to check that user input is either 'rock', 'paper' or 'scissors'
+//     // if not ask for input again
+//     // if input is valid continue on with program
+//     keepGoing = true;
+
+//     while (keepGoing) {
+//         if (playerSelection.toLowerCase() == 'rock' || playerSelection.toLowerCase() == 'paper' ||
+//             playerSelection.toLowerCase() == 'scissors') {
+//                 keepGoing = false;
+//             } else {
+//                 playerSelection = prompt("Must choose either 'rock', 'paper' or 'scissors'");
+//             }
     
-    }
+//     }
 
-    return playerSelection;
-}
+//     return playerSelection;
+// }
 
 function initiateRound() {
     let playerSelection = this.value;
     let computerSelection = getComputerChoice();
-    let playerScore = 0;
-    let computerScore = 0;
     playRound(playerSelection, computerSelection, playerScore, computerScore);
     let roundAnouncement = gameInfo['roundAnouncement'];
     let resultDiv = document.getElementById('results');
-    resultDiv.innerHTML = `${roundAnouncement}`;
+    playerScore = gameInfo['playerScore'];
+    computerScore = gameInfo['computerScore'];
+    resultDiv.innerHTML = `${roundAnouncement}
+                            Score: You:${playerScore} - CPU:${computerScore}`;
+
 }
 
 
@@ -90,24 +96,12 @@ function initiateRound() {
 // function to run several rounds of Rock Paper Scissors and then declare a winner
 function game() {
     let round = 1;
-    let playerScore = 0;
-    let computerScore = 0;
     let buttons = document.querySelectorAll('.button');
-    // for(round; round <= 5; round++) {
-        // let playerSelection = getPlayerChoice();
-        // const computerSelection = getComputerChoice();
-        for(const button of buttons) {
-            let playerSelection = this.value;
-            let computerSelection = getComputerChoice();
-            button.addEventListener('click', initiateRound);
-        }
-        // let gameInfo = playRound(playerSelection, computerSelection, playerScore, computerScore);
-        // playerScore = gameInfo['playerScore'];
-        // computerScore = gameInfo['computerScore'];
 
-        // console.log(`Score is you:${playerScore} to computer:${computerScore}`);
-    // }
+    for(const button of buttons) {
+        button.addEventListener('click', initiateRound);
+    }
+
 }
 
 game();
-// initiateRound();
