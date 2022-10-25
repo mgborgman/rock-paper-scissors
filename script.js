@@ -79,40 +79,32 @@ function initiateRound() {
     let computerSelection = getComputerChoice();
     let playerScore = 0;
     let computerScore = 0;
-    console.log(`${playerSelection} was clicked`)
-    // console.log(typeof(gameInfo));
-    // console.log(gameInfo);
     playRound(playerSelection, computerSelection, playerScore, computerScore);
+    let roundAnouncement = gameInfo['roundAnouncement'];
+    let resultDiv = document.getElementById('results');
+    resultDiv.innerHTML = `${roundAnouncement}`;
 }
 
 
 
 // function to run several rounds of Rock Paper Scissors and then declare a winner
 function game() {
-    console.log('are we getting here');
     let round = 1;
     let playerScore = 0;
     let computerScore = 0;
     let buttons = document.querySelectorAll('.button');
-    // console.log(buttons);
     // for(round; round <= 5; round++) {
         // let playerSelection = getPlayerChoice();
         // const computerSelection = getComputerChoice();
         for(const button of buttons) {
-            // console.log(button);
             let playerSelection = this.value;
             let computerSelection = getComputerChoice();
-            button.addEventListener('click', playRound(playerSelection, computerSelection, playerScore, computerScore));
-            // console.log(gameInfo);
+            button.addEventListener('click', initiateRound);
         }
-        // console.log(gameInfo);
         // let gameInfo = playRound(playerSelection, computerSelection, playerScore, computerScore);
         // playerScore = gameInfo['playerScore'];
         // computerScore = gameInfo['computerScore'];
-        let roundAnouncement = gameInfo['roundAnouncement'];
-        console.log(roundAnouncement);
-        let resultDiv = document.getElementById('results');
-        resultDiv.innerHTML = `${roundAnouncement}`;
+
         // console.log(`Score is you:${playerScore} to computer:${computerScore}`);
     // }
 }
