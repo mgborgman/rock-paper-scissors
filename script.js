@@ -80,6 +80,8 @@ function playRound(playerSelection, computerSelection, playerScore = 0, computer
 
 function initiateRound() {
     let gameResultDiv = document.getElementById('game-results');
+    let gameRulesPara = document.getElementById('game-rules');
+    gameRulesPara.classList.add('hide');
     if(playerScore < 5 && computerScore < 5) {
         let playerSelection = this.value;
         let computerSelection = getComputerChoice();
