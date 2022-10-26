@@ -79,15 +79,24 @@ function playRound(playerSelection, computerSelection, playerScore = 0, computer
 // }
 
 function initiateRound() {
-    let playerSelection = this.value;
-    let computerSelection = getComputerChoice();
-    playRound(playerSelection, computerSelection, playerScore, computerScore);
-    let roundAnouncement = gameInfo['roundAnouncement'];
-    let resultDiv = document.getElementById('results');
-    playerScore = gameInfo['playerScore'];
-    computerScore = gameInfo['computerScore'];
-    resultDiv.innerHTML = `${roundAnouncement}
-                            Score: You:${playerScore} - CPU:${computerScore}`;
+    let gameResultDiv = document.getElementById('game-results');
+    if(playerScore < 5 && computerScore < 5) {
+        let playerSelection = this.value;
+        let computerSelection = getComputerChoice();
+        playRound(playerSelection, computerSelection, playerScore, computerScore);
+        let roundAnouncement = gameInfo['roundAnouncement'];
+        let roundResultDiv = document.getElementById('round-results');
+        
+        playerScore = gameInfo['playerScore'];
+        computerScore = gameInfo['computerScore'];
+        roundResultDiv.innerHTML = `${roundAnouncement}
+                                Score: You:${playerScore} - CPU:${computerScore}`;
+        if (playerScore == 5 && computerScore < 5) {
+            gameResultDiv.innerHTML = `You Win!`
+        } else if (computerScore == 5 && playerScore < 5){
+            gameResultDiv.innerHTML = 'You Lose.'
+        }      
+    }
 
 }
 
@@ -95,9 +104,7 @@ function initiateRound() {
 
 // function to run several rounds of Rock Paper Scissors and then declare a winner
 function game() {
-    let round = 1;
     let buttons = document.querySelectorAll('.button');
-
     for(const button of buttons) {
         button.addEventListener('click', initiateRound);
     }
